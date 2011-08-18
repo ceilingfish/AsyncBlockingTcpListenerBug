@@ -29,17 +29,16 @@ namespace AsyncBlockingTcpListenerBug
 
             sendMessage.Enabled = true;
 
-            Thread listenThread = new Thread(ListenForConnections);
-            listenThread.Start();
-//            ListenForConnections();
+            ListenForConnections();
         }
 
-        private void ListenForConnections()
+        private async Task ListenForConnections()
         {
             while (true)
             {
-                TcpClient client = _listener.AcceptTcpClient();
+                TcpClient client = await _listener.AcceptTcpClientAsync();
 
+                //This line is never reached. await never yields.
                 NetworkStream stream = client.GetStream();
 
                 while (client.Connected)
