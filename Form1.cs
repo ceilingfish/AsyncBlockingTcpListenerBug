@@ -31,13 +31,13 @@ namespace AsyncBlockingTcpListenerBug
 
             Thread listenThread = new Thread(ListenForConnections);
             listenThread.Start();
-//            ListenForConnections();
         }
 
         private void ListenForConnections()
         {
             while (true)
             {
+                //Using AcceptTcpClient callers get a response
                 TcpClient client = _listener.AcceptTcpClient();
 
                 NetworkStream stream = client.GetStream();
